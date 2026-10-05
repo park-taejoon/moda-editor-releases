@@ -17,4 +17,5 @@
 
 ## 기능 가이드
 
+- [커스텀 노드 뷰 (nodeViews)](./features/node-views.md)
 - [검색 가능한 목록 (예시 기능)](./features/searchable-list.md)

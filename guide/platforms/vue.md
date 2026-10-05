@@ -34,3 +34,13 @@ const { editor } = useEditor({ doc: myDoc, extensions: starterExtensions() });
 ```
 
 `useEditorState(editor)`로 외부 에디터의 `EditorState`만 구독할 수도 있다.
+
+### 커스텀 노드 뷰
+
+```vue
+<EditorView :editor="editor" :node-views="{ codeBlock: CodeBlockView }" />
+```
+
+컴포넌트는 `node`/`editor`/`path` props와 `#content` 슬롯(편집
+아울렛)을 받는다. 계약과 헬퍼는
+[커스텀 노드 뷰](../features/node-views.md) 참고.

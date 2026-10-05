@@ -42,3 +42,12 @@ keyed `{#each}`는 고유 키가 필요하다 — 키 함수를 거쳐 중복/un
 
 `$editorStore` → 불변 `EditorState`, `editorStore.editor` → commands/dispatch.
 `EditorNode.svelte`는 RenderNode 트리를 번역하는 자기 참조 컴포넌트다.
+
+### 커스텀 노드 뷰
+
+```svelte
+<EditorView editor={editorStore.editor} nodeViews={{ codeBlock: CodeBlockView }} />
+```
+
+컴포넌트는 `node`/`editor`/`path` props와 `content` 스니펫을 받는다.
+계약과 헬퍼는 [커스텀 노드 뷰](../features/node-views.md) 참고.

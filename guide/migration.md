@@ -23,7 +23,7 @@
 | `handleTextInput`/`handleKeyDown` props | `Extension.input` (insertText/insertParagraph/deleteBackward) | true=소비, false=폴스루 — 같은 모델 |
 | `markInputRule`/`textblockTypeInputRule` | `Extension.inputRules` + `markRule`/`blockRule` | 같은 tr 안에서 변환 — 하나의 undo 단위 |
 | `NodeView` (atom 섬)      | `EditorView nodeViews` prop                 | `atom: true` 노드 — ce=false 섬 |
-| `NodeView` + `NodeViewContent` | `nodeViews` + `NodeViewProps.content` 아울렛 | 비-atom 노드 — `.me-node-content`에 자식 블록 렌더 |
+| `NodeView` + `NodeViewContent` | `nodeViews` + `NodeViewProps.content`/`path` | 비-atom 노드 — `.me-node-content`에 자식 블록 렌더, `path`로 경로 기반 커맨드 |
 | `editor.isActive("heading")` | `isBlockActive(state, "heading")`          | 최상위 블록 기준              |
 | `bulletList`/`orderedList`/`listItem` | 스타터 노드 + `tr.splitItem`/`liftItem`/`sinkItem` | `-`/`1.` 입력 규칙, Enter/Backspace/Tab 키맵 내장 |
 | `liftListItem`/`sinkListItem` 커맨드 | `commands.liftItem`/`sinkItem` | 중첩 아이템은 바깥 리스트로 들어올림(PM 관례) |
@@ -36,11 +36,13 @@
 | `superscript`/`subscript` 마크 | 동명 마크 + `commands.toggleSuperscript`/`toggleSubscript` | 상호 배타 토글 |
 | `unsetAllMarks` (Tiptap) | `commands.clearFormat` | 범위 전 마크 제거 / collapsed면 storedMarks 초기화 |
 | `table`/`tableRow`/`tableCell` | 동명 스타터 노드 + `commands.insertTable`/`nextCell`/`addTableRow`/`addTableColumn`/`deleteTable` | Tab=다음 셀, 끝 셀 Tab=행 추가 |
-| `image` 노드 | `image` atom 리프 + `commands.insertImage(src)` | attrs.src/alt → `<img>` |
+| `image` 노드 | `image` atom 리프 + `commands.insertImage(src)` | attrs.src/alt/width → `<img>` |
+| 이미지 선택/편집 UI (Tiptap/TinyMCE 이미지 툴바) | 클릭 → NodeSelection + `.me-imgui` 오버레이 (코어 내장) | 편집(src/alt)·파일 교체·삭제·드래그 리사이즈 → `updateImage`/`deleteImage` |
 | `taskList`/`taskItem` | 동명 스타터 노드 + `commands.toggleTaskItem` | `[ ]`/`[x]` 입력 규칙, `.me-check` 마커 클릭 토글 |
 | 링크 다이얼로그 (Tiptap `setLink`) | `.me-pop` 팝오버 + `commands.setLink(href)`/`unsetLink` + `linkHrefAt(state)` | Mod-K capture 핸들러가 코어 prompt 폴백을 대체 |
 | 이미지 업로드 확장 | `.me-pop` file input → FileReader → `commands.insertImage(src, alt)` | 제품에서는 업로드 API로 교체 |
-| 코드블록 `language` (hljs 등) | `attrs.language` → `pre[data-language]` + `commands.setCodeLanguage` | 멀티블록 선택은 하나의 codeBlock으로 병합 |
+| 코드블록 `language` (hljs 등) | `attrs.language` → `pre[data-language]` + `commands.setCodeLanguage`/`setCodeLanguageAt` | 언어 별칭 매핑 — bash/java/sql/rust 등, 미지원은 generic 폴백. 멀티블록 선택은 하나의 codeBlock으로 병합 |
+| 코드블록 크롬 (언어/복사 버튼) | `nodeViews.codeBlock` 컴포넌트 — `.me-codeview`/`.me-codehead` 카드 헤더 + `formatCodeAt`/`blockText` | nodeViews 미등록 시 코어 `.me-codeui` 오버레이 폴백 |
 | 코드블록 lowlight/hljs 데코레이션 (Tiptap) | `NodeSpec.codeHighlighter` + `highlightCode` 토크나이저 | 뷰 레벨 토큰 스팬 — doc 불변 |
 | `enableTabIndentation` (Tiptap) | `indentCode`/`dedentCode` — codeBlock 키맵 내장 | Tab=`\t`, Shift-Tab=탭/스페이스4 제거 |
 | `exitOnArrowDown`/`exitOnArrowUp` (Tiptap) | `exitCodeArrow` — codeBlock 키맵 내장 | 이웃 없으면 빈 문단 생성 |

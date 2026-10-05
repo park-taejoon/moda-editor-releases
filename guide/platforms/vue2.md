@@ -38,3 +38,13 @@ const { editor } = useEditor({ doc: myDoc, extensions: starterExtensions() });
 
 `EditorNode`는 SFC 자기참조 대신 render 함수(`EditorNode.ts`)로 구현돼
 있다 — vite:vue2의 SFC 자기참조가 불안정하기 때문이다.
+
+### 커스텀 노드 뷰
+
+```vue
+<EditorView :editor="editor" :node-views="{ codeBlock: CodeBlockView }" />
+```
+
+Vue 3과 같은 계약 — `node`/`editor`/`path` props + `content` 슬롯.
+render 함수 컴포넌트에서는 `this.$scopedSlots.content`로 아울렛을
+꺼낸다. 계약과 헬퍼는 [커스텀 노드 뷰](../features/node-views.md) 참고.

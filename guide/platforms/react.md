@@ -35,3 +35,13 @@ function App() {
 `useEditor`는 `createEditor`를 감싼다 — 반환값의 `state`는 불변
 `EditorState`라 `===` 비교로 렌더 필요 여부가 결정된다.
 `editor.commands.toggleBold()` 등을 툴바 버튼에 연결하면 된다.
+
+### 커스텀 노드 뷰
+
+```tsx
+<EditorView editor={editor} nodeViews={{ codeBlock: CodeBlockView }} />
+```
+
+`CodeBlockView`는 `NodeViewProps{node, editor, path, content}`를
+받는 컴포넌트 — `content`(ReactNode)를 자기 크롬 안에 렌더한다.
+계약과 헬퍼는 [커스텀 노드 뷰](../features/node-views.md) 참고.
