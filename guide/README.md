@@ -1,11 +1,11 @@
 # 가이드
 
-- [시작하기 — 템플릿에서 새 프로젝트 만들기](./getting-started.md)
-- [아키텍처 — 코어/어댑터/스냅샷 계약](./architecture.md)
-- [기능 추가 워크플로](./extending.md)
-- [테스트 — 유닛/컨포먼스/E2E](./testing.md)
 - [테마 — CSS 변수](./theming.md)
 - [마이그레이션 매핑](./migration.md)
+
+<!-- 개발/기여 문서(getting-started/architecture/extending/testing)는
+     이 목록에 넣지 않는다 — 이 파일은 releases 레포에 동기화되며
+     거기엔 사용자 가이드만 실린다. 개발 문서 링크는 루트 README에 둔다 -->
 
 ## 플랫폼별 가이드
 

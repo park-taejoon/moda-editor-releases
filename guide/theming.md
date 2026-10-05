@@ -73,6 +73,6 @@ Monokai 계열 팔레트로 오버라이드된다. 커스텀 테마도 같은 �
 
 DOM 클래스는 `me-` 접두어를 쓴다 (`me-root`/`me-search`/`me-list`/
 `me-item`/`me-count`/`me-editor`/`me-node-view`/`me-callout`/
-`me-frame`/`me-toolbar`/`me-tool`/`me-sep`/`me-statusbar`/
-`me-blockfmt`/`me-overflow`/`me-menu`).
+`me-frame`/`me-toolbar`/`me-tool`/`me-ic`/`me-sep`/`me-statusbar`/
+`me-blockfmt`/`me-overflow`/`me-styles`/`me-menu`).
 새 요소도 같은 접두어 + conformance 계약 갱신.
