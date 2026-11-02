@@ -15,12 +15,12 @@
 
 ## NodeViewProps
 
-| 필드      | 타입                     | 설명                                                        |
-| --------- | ------------------------ | ----------------------------------------------------------- |
-| `node`    | `EditorNode`             | 원본 AST 노드 — `attrs`(언어·alt 등)는 여기서 읽는다         |
-| `editor`  | `Editor`                 | 커맨드 실행은 `editor.commands.*`                             |
-| `path`    | `readonly number[]`      | doc 루트에서의 자식 인덱스 경로 — 경로 기반 커맨드의 인자     |
-| `content` | 프레임워크별 슬롯/스니펫 | 비-atom 노드의 편집 아울렛 — **반드시 렌더해야 한다**         |
+| 필드      | 타입                     | 설명                                                      |
+| --------- | ------------------------ | --------------------------------------------------------- |
+| `node`    | `EditorNode`             | 원본 AST 노드 — `attrs`(언어·alt 등)는 여기서 읽는다      |
+| `editor`  | `Editor`                 | 커맨드 실행은 `editor.commands.*`                         |
+| `path`    | `readonly number[]`      | doc 루트에서의 자식 인덱스 경로 — 경로 기반 커맨드의 인자 |
+| `content` | 프레임워크별 슬롯/스니펫 | 비-atom 노드의 편집 아울렛 — **반드시 렌더해야 한다**     |
 
 `path`가 있으면 브라우저 캐럿과 무관하게 "이 블록"을 조작할 수 있다 —
 셀렉트/버튼을 만지는 동안 캐럿이 크롬으로 이동해도 정확한 블록이
@@ -54,13 +54,13 @@ atom 노드 — 편집 불가 섬
 
 ## 제공 함수
 
-| 함수 / 커맨드                                | 설명                                                        |
-| -------------------------------------------- | ----------------------------------------------------------- |
-| `blockText(node)`                            | 노드의 텍스트 전체 (복사 버튼용)                              |
-| `codeLangOptions(current)`                   | 언어 셀렉트 옵션 목록 — 현재 값이 목록에 없으면 동적 추가     |
-| `editor.commands["setCodeLanguageAt"](path, l)` | path 블록의 `language` attr 변경                              |
+| 함수 / 커맨드                                   | 설명                                                                |
+| ----------------------------------------------- | ------------------------------------------------------------------- |
+| `blockText(node)`                               | 노드의 텍스트 전체 (복사 버튼용)                                    |
+| `codeLangOptions(current)`                      | 언어 셀렉트 옵션 목록 — 현재 값이 목록에 없으면 동적 추가           |
+| `editor.commands["setCodeLanguageAt"](path, l)` | path 블록의 `language` attr 변경                                    |
 | `editor.commands["formatCodeAt"](path)`         | path 블록 서식 정리 — JSON pretty-print·언어별 재들여쓰기·공백 정리 |
-| `renderNodeHTML(rn)`                            | RenderNode → HTML 문자열 (data-me-path 유지) — 아래 IME 규칙용 |
+| `renderNodeHTML(rn)`                            | RenderNode → HTML 문자열 (data-me-path 유지) — 아래 IME 규칙용      |
 
 유틸 함수(`blockText`, `codeLangOptions`, `codeTextAt` …)는 각 어댑터
 패키지에서 그대로 re-export한다 — 예를 들어 `import { blockText } from
@@ -103,7 +103,9 @@ function CodeBlockView({ node, editor, path, content }: NodeViewProps) {
           }
         >
           {codeLangOptions(lang).map((o) => (
-            <option key={o.value} value={o.value}>{o.label}</option>
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
           ))}
         </select>
         <button

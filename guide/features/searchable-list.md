@@ -9,6 +9,7 @@
 new WidgetCore<Item>({
   items: Item[],                       // 전체 항목
   getItemText?: (item) => string,      // 표시/검색 문자열 (기본 String(item))
+  getItemId?: (item, index) => string, // 목록 렌더 키 (기본 인덱스 문자열)
   events?: { searchChange, itemAdd },  // 이벤트 핸들러
 });
 ```
