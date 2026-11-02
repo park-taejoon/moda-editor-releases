@@ -82,11 +82,14 @@ carets.bind(editor, awareness, { ydoc, user: { name, color } });
 
 ## 협업 undo — createCollabUndo (collab-yjs)
 
-`Y.UndoManager`를 에디터 undo/redo와 연결 — 코어의 Step 역변환
-history는 절대 좌표라 원격 편집이 섞이면 스택 top의 **남의 편집**까지
-되돌린다. 여기서는 `trackedOrigins`를 로컬 업로드 origin으로 제한해
-스택이 내 변경만 추적하고, 복원은 CRDT 상대 위치 기반이라 인터리빙된
-원격 편집 사이에서도 정확하다:
+`Y.UndoManager`를 에디터 undo/redo와 연결 — 코어 history는
+`history.skip` 원격 tr이 오면 저장된 엔트리의 스텝·역스텝·셀렉션을
+원격 스텝으로 전진 매핑하므로 undo가 옛 좌표에 적용돼 원격 텍스트를
+지우는 사고는 막는다. 다만 위치 매핑 근사라 의미 재조정(semantic
+rebase)까지는 하지 않는다 — 인터리빙된 동시 편집에서 정확한 undo가
+필요하면 `Y.UndoManager`를 쓴다. `trackedOrigins`를 로컬 업로드
+origin으로 제한해 스택이 내 변경만 추적하고, 복원은 CRDT 상대 위치
+기반이라 인터리빙된 원격 편집 사이에서도 정확하다:
 
 ```ts
 const COLLAB_UNDO = createCollabUndo();

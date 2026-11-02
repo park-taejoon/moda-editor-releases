@@ -85,8 +85,18 @@ HTMLElement를 자기 크롬 안에 append해 편집 아울렛을 배치한다.
 
 **Vanilla 특이점**: `mountEditor`가 `{ editor, rootEl, binding,
 destroy() }`를 반환한다 — `binding`은 `bindEditorInput`의 공개 계약
-(셀렉션 동기화·`dirtyPaths`)로, 재조정 시 mountEditor가 더티 표시를
-소비한다. `destroy()`는 바인딩 해제 + (내부 생성이면)
-`editor.destroy()`까지 한다. `options.editor`로 외부 인스턴스를 넘기면
-에디터는 해제하지 않는다. 옵션 변경은 마운트 후 반영되지 않는다 —
-`setDoc`/`setEditable` 등 메서드로 조정한다.
+(셀렉션 동기화·`dirtyPaths`·`ime`·`afterComposition`)로, 재조정 시
+mountEditor가 더티 표시를 소비한다. `destroy()`는 바인딩 해제 +
+(내부 생성이면) `editor.destroy()`까지 한다. `options.editor`로
+외부 인스턴스를 넘기면 에디터는 해제하지 않는다. 옵션 변경은
+마운트 후 반영되지 않는다 — `setDoc`/`setEditable` 등 메서드로
+조정한다.
+
+재조정은 최상위 자식의 경로 마커(`data-me-path`, 노드 뷰 래퍼는
+첫 me-path 후손)가 doc 인덱스와 1:1인지 먼저 검증한다 — IME 조합
+창의 네이티브 블록 분할·`deleteFromDocument` 등 브라우저가 doc을
+거치지 않고 최상위 DOM을 바꾸면 1:1이 깨진다. 어긋나면 인덱스
+재조정 대신 전체를 다시 그려 계약을 복구한다. 조합/흡수 창에는
+이 쓰기 전부(블록 교체·재구축·더티 drain·셀렉션 복원)를
+`afterComposition`까지 미룬다 — 자세한 창 계약은
+`docs/guide/architecture.md`의 IME 조합 입력 섹션을 참조한다.
